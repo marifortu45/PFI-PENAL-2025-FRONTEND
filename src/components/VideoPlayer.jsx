@@ -298,10 +298,10 @@ const VideoPlayer = ({ penaltyId, onNavigate }) => {
           <p className="text-red-400 text-lg mb-4">⚠️ Error</p>
           <p className="text-red-300">{error}</p>
           <button
-            onClick={() => onNavigate('videos')}
+            onClick={onNavigate}
             className="mt-4 px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-lg transition-colors"
           >
-            Volver a selección
+            Volver
           </button>
         </div>
       </div>
@@ -312,14 +312,14 @@ const VideoPlayer = ({ penaltyId, onNavigate }) => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       {/* Header */}
       <header className="bg-slate-900/50 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => onNavigate('videos')}
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              <ChevronLeft className="w-6 h-6 text-sky-400" />
-            </button>
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={onNavigate}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6 text-sky-400" />
+          </button>
             <div>
               <h1 className="text-2xl font-bold text-white">Análisis de Penal</h1>
               <p className="text-sm text-slate-400">ID: {penaltyId}</p>
@@ -328,10 +328,10 @@ const VideoPlayer = ({ penaltyId, onNavigate }) => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Video Player */}
-          <div className="lg:col-span-2">
+      <main className="max-w-[1800px] mx-auto px-6 py-8">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        {/* Video Player - Ahora ocupa 3 columnas */}
+        <div className="xl:col-span-3">
             <div className="bg-slate-800/30 backdrop-blur-sm rounded-xl border border-slate-700/50 overflow-hidden">
               {/* Video Container */}
               <div className="relative bg-black aspect-video">
@@ -489,7 +489,7 @@ const VideoPlayer = ({ penaltyId, onNavigate }) => {
           </div>
 
           {/* Info Panel */}
-          <div className="lg:col-span-1 space-y-4">
+          <div className="xl:col-span-1 space-y-4">
             {penaltyInfo && (
               <>
                 {/* Result */}

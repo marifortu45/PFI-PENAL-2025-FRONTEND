@@ -186,8 +186,9 @@ const PlayersView = ({ onNavigate }) => {
                   {filteredPlayers.map((player, index) => (
                     <div 
                       key={player.player_id}
+                      onClick={() => onNavigate('player-penalties', player.player_id)}
                       className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-slate-700/30 
-                               transition-colors duration-150"
+                              transition-colors duration-150 cursor-pointer group"
                       style={{
                         animation: `fadeIn 0.3s ease-in ${index * 0.05}s both`
                       }}
