@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Users, ChevronLeft, TrendingUp, TrendingDown } from 'lucide-react';
+import { Search, Users, ChevronLeft, TrendingUp, TrendingDown, Lightbulb } from 'lucide-react';
 
 const PlayersView = ({ onNavigate }) => {
   const [players, setPlayers] = useState([]);
@@ -150,8 +150,8 @@ const PlayersView = ({ onNavigate }) => {
           <div className="bg-slate-800/30 backdrop-blur-sm rounded-xl border border-slate-700/50 overflow-hidden">
             {/* Header de la tabla */}
             <div className="overflow-x-auto">
-              <div className="min-w-[1000px]">
-                <div className="grid grid-cols-9 gap-4 px-6 py-4 bg-slate-800/50 border-b border-slate-700/50">
+              <div className="min-w-[1100px]">
+                <div className="grid grid-cols-10 gap-4 px-6 py-4 bg-slate-800/50 border-b border-slate-700/50">
                   <div className="text-sky-400 font-semibold text-sm uppercase tracking-wide">
                     ID
                   </div>
@@ -179,6 +179,9 @@ const PlayersView = ({ onNavigate }) => {
                   <div className="text-sky-400 font-semibold text-sm uppercase tracking-wide text-center">
                     Efectividad
                   </div>
+                  <div className="text-sky-400 font-semibold text-sm uppercase tracking-wide text-center">
+                    Análisis ML
+                  </div>
                 </div>
 
                 {/* Filas de jugadores */}
@@ -186,60 +189,92 @@ const PlayersView = ({ onNavigate }) => {
                   {filteredPlayers.map((player, index) => (
                     <div 
                       key={player.player_id}
-                      onClick={() => onNavigate('player-penalties', player.player_id)}
-                      className="grid grid-cols-9 gap-4 px-6 py-4 hover:bg-slate-700/30 
-                              transition-colors duration-150 cursor-pointer group"
+                      className="grid grid-cols-10 gap-4 px-6 py-4 hover:bg-slate-700/30 
+                              transition-colors duration-150 group"
                       style={{
                         animation: `fadeIn 0.3s ease-in ${index * 0.05}s both`
                       }}
                     >
-                      <div className="text-slate-300 font-mono text-sm">
-                        {player.player_id}
+                      {/* Columnas clickeables para ver penales */}
+                      <div 
+                        onClick={() => onNavigate('player-penalties', player.player_id)}
+                        className="contents cursor-pointer"
+                      >
+                        <div className="text-slate-300 font-mono text-sm flex items-center">
+                          {player.player_id}
+                        </div>
+                        <div className="text-white font-medium flex items-center">
+                          {player.short_name || '-'}
+                        </div>
+                        <div className="text-slate-200 flex items-center">
+                          {player.name || '-'}
+                        </div>
+                        <div className="text-slate-200 flex items-center">
+                          {player.lastname || '-'}
+                        </div>
+                        <div className="flex items-center">
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium
+                            ${player.foot?.toUpperCase() === 'L' ? 'bg-blue-500/20 text-blue-300' : ''}
+                            ${player.foot?.toUpperCase() === 'R' ? 'bg-green-500/20 text-green-300' : ''}
+                            ${!player.foot || (player.foot?.toUpperCase() !== 'L' && player.foot?.toUpperCase() !== 'R') ? 'bg-slate-600/20 text-slate-400' : ''}
+                          `}>
+                            {getFootLabel(player.foot)}
+                          </span>
+                        </div>
+                        <div className="text-center flex items-center justify-center">
+                          <span className="text-white font-semibold text-lg">
+                            {player.total_penalties || 0}
+                          </span>
+                        </div>
+                        <div className="text-center flex items-center justify-center">
+                          <span className="text-green-400 font-semibold">
+                            {player.goals || 0}
+                          </span>
+                        </div>
+                        <div className="text-center flex items-center justify-center">
+                          <span className="text-red-400 font-semibold">
+                            {(player.missed || 0) + (player.saved || 0)}
+                          </span>
+                        </div>
+                        <div className="text-center flex items-center justify-center">
+                          <span className={`font-bold text-lg ${getEffectivenessColor(player.effectiveness || 0)}`}>
+                            {player.effectiveness || 0}%
+                            {player.total_penalties > 0 && getEffectivenessIcon(player.effectiveness || 0)}
+                          </span>
+                        </div>
                       </div>
-                      <div className="text-white font-medium">
-                        {player.short_name || '-'}
-                      </div>
-                      <div className="text-slate-200">
-                        {player.name || '-'}
-                      </div>
-                      <div className="text-slate-200">
-                        {player.lastname || '-'}
-                      </div>
-                      <div className="flex items-center">
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium
-                          ${player.foot?.toUpperCase() === 'L' ? 'bg-blue-500/20 text-blue-300' : ''}
-                          ${player.foot?.toUpperCase() === 'R' ? 'bg-green-500/20 text-green-300' : ''}
-                          ${!player.foot || (player.foot?.toUpperCase() !== 'L' && player.foot?.toUpperCase() !== 'R') ? 'bg-slate-600/20 text-slate-400' : ''}
-                        `}>
-                          {getFootLabel(player.foot)}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className="text-white font-semibold text-lg">
-                          {player.total_penalties || 0}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className="text-green-400 font-semibold">
-                          {player.goals || 0}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className="text-red-400 font-semibold">
-                          {(player.missed || 0) + (player.saved || 0)}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className={`font-bold text-lg ${getEffectivenessColor(player.effectiveness || 0)}`}>
-                          {player.effectiveness || 0}%
-                          {player.total_penalties > 0 && getEffectivenessIcon(player.effectiveness || 0)}
-                        </span>
+
+                      {/* Botón de Análisis ML */}
+                      <div className="flex items-center justify-center">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onNavigate('player-suggestion', player.player_id);
+                          }}
+                          className="px-3 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 
+                                   rounded-lg transition-colors flex items-center gap-2 text-sm font-medium
+                                   border border-yellow-500/30 hover:border-yellow-500/50 group-hover:scale-105"
+                          title="Ver análisis ML del jugador"
+                        >
+                          <Lightbulb className="w-4 h-4" />
+                          <span className="hidden xl:inline">Análisis</span>
+                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Info Footer */}
+        {!loading && !error && filteredPlayers.length > 0 && (
+          <div className="mt-6 text-center text-slate-400 text-sm">
+            <p>
+              Haz click en un jugador para ver sus penales • 
+              Haz click en "Análisis" para ver predicciones ML
+            </p>
           </div>
         )}
       </main>

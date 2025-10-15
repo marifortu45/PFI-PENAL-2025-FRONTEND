@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import HomePage from './components/HomePage';
 import PlayersView from './components/PlayersView';
 import PlayerPenalties from './components/PlayerPenalties';
+import PlayerSuggestion from './components/PlayerSuggestion';
 import PenaltySelector from './components/PenaltySelector';
 import VideoPlayer from './components/VideoPlayer';
 import UploadForm from './components/UploadForm';
@@ -19,11 +20,9 @@ const App = () => {
   const [uploadVideoData, setUploadVideoData] = useState(null);
   const [predictionData, setPredictionData] = useState(null);
 
-  // Obtener la vista actual
   const currentState = navigationStack[navigationStack.length - 1];
   const currentView = currentState.view;
 
-  // Navegar hacia adelante
   const navigateTo = (view, param = null) => {
     const newState = { view, param };
     setNavigationStack([...navigationStack, newState]);
@@ -31,29 +30,30 @@ const App = () => {
     if (view === 'player-penalties' && param) {
       setSelectedPlayerId(param);
     }
+    if (view === 'player-suggestion' && param) {
+      setSelectedPlayerId(param);
+    }
   };
 
-  // Navegar hacia atrás
   const navigateBack = () => {
     if (navigationStack.length > 1) {
       const newStack = navigationStack.slice(0, -1);
       setNavigationStack(newStack);
       
-      // Restaurar estado según la vista anterior
       const previousState = newStack[newStack.length - 1];
       if (previousState.view === 'player-penalties' && previousState.param) {
+        setSelectedPlayerId(previousState.param);
+      }
+      if (previousState.view === 'player-suggestion' && previousState.param) {
         setSelectedPlayerId(previousState.param);
       }
     }
   };
 
-  // Obtener la función de navegación para VideoPlayer
   const getVideoPlayerNavigation = () => {
-    // Si hay más de 1 item en el stack, volver atrás
     if (navigationStack.length > 1) {
       return navigateBack;
     }
-    // Si no, ir a videos por defecto
     return () => navigateTo('videos');
   };
 
@@ -88,6 +88,13 @@ const App = () => {
           playerId={selectedPlayerId} 
           onNavigate={navigateBack}
           onSelectPenalty={handleSelectPenalty}
+        />
+      )}
+      
+      {currentView === 'player-suggestion' && selectedPlayerId && (
+        <PlayerSuggestion 
+          playerId={selectedPlayerId} 
+          onNavigate={navigateBack}
         />
       )}
       
