@@ -19,14 +19,14 @@
 
 PENAL es una aplicación web frontend desarrollada en React que permite a entrenadores, analistas deportivos y jugadores de fútbol analizar penales mediante tecnologías de inteligencia artificial. El sistema integra detección de jugadores con YOLOv11, almacenamiento de videos en AWS S3, base de datos PostgreSQL en RDS y predicciones de Machine Learning con AWS SageMaker.
 
-### 🎯 Características Principales
+### Características Principales
 
-- **🎥 Visualización de Videos con Análisis de Posturas**: Explora videos de penales con análisis detallado de posiciones del arquero
-- **📤 Carga de Videos**: Sistema completo para subir nuevos videos de penales con metadatos
-- **🤖 Predicción Inteligente**: Predicciones en tiempo real sobre la dirección del tiro usando ML
-- **👥 Gestión de Jugadores**: Base de datos completa con estadísticas y análisis de jugadores
-- **🎯 Detección de Jugadores**: Identificación automática de jugadores en videos usando YOLOv11
-- **📊 Estadísticas Detalladas**: Análisis completo de penales por jugador, equipo y competencia
+- **Visualización de Videos con Análisis de Posturas**: Explora videos de penales con análisis detallado de posiciones del arquero
+- **Carga de Videos**: Sistema completo para subir nuevos videos de penales con metadatos
+- **Predicción Inteligente**: Predicciones en tiempo real sobre la dirección del tiro usando ML
+- **Gestión de Jugadores**: Base de datos completa con estadísticas y análisis de jugadores
+- **Detección de Jugadores**: Identificación automática de jugadores en videos usando YOLOv11
+- **Estadísticas Detalladas**: Análisis completo de penales por jugador, equipo y competencia
 
 ---
 
